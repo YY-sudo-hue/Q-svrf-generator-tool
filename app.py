@@ -7,34 +7,30 @@ st.set_page_config(page_title="SVRF 自动生成系统", page_icon="📄")
 st.title("📄 SVRF 质量文件自动生成器")
 st.markdown("输入客户与零件信息，系统将自动从数据库匹配并生成标准 SVRF 文件。")
 
-# ---------------- 请在下方两行粘贴您的真实链接 ----------------
-url_warranty = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSU0pfEGkRcFe8ehE9nNUolB1u0nciqR_e6hzWgzeAKk-KkXfLVcM4zkbssEbzgqGtWUhbjSnj8ybNs/pubhtml?gid=1613958416&single=true"
-url_part = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSU0pfEGkRcFe8ehE9nNUolB1u0nciqR_e6hzWgzeAKk-KkXfLVcM4zkbssEbzgqGtWUhbjSnj8ybNs/pubhtml?gid=1738470985&single=true"
-# -----------------------------------------------------------
+db_file = "SVRF 信息表.xlsx"
 
-# 新增功能 1：全表查询（放在可折叠的面板中，保持页面整洁）
+# 全表查询面板
 with st.expander("🔍 点击查看基础数据库 (完整信息表)"):
     col_db1, col_db2 = st.columns(2)
     with col_db1:
-        if st.button("📊 查看客户信息"):
+        if st.button("📊 查看质保期信息"):
             try:
-                st.dataframe(pd.read_csv(url_warranty))
+                st.dataframe(pd.read_excel(db_file, sheet_name=0))
             except Exception as e:
-                st.error(f"读取失败，请检查链接: {e}")
+                st.error(f"读取失败，请检查文件: {e}")
     with col_db2:
-        if st.button("📊 查看 CCLSCP 数据库"):
+        if st.button("📊 查看 CCLSCP 信息"):
             try:
-                st.dataframe(pd.read_csv(url_part))
+                st.dataframe(pd.read_excel(db_file, sheet_name=1))
             except Exception as e:
-                st.error(f"读取失败，请检查链接: {e}")
+                st.error(f"读取失败，请检查文件: {e}")
 
-st.divider() # 添加一条分割线
+st.divider() 
 
 # 输入区域
 customer = st.text_input("客户名称 (例如: 奇瑞)")
 part = st.text_input("子零件名称 (例如: foam)")
 
-# 新增功能 2：独立查询匹配信息与生成按钮并排
 col_query, col_generate = st.columns(2)
 
 with col_query:
@@ -42,14 +38,14 @@ with col_query:
 with col_generate:
     generate_btn = st.button("✨ 生成 SVRF 文件", type="primary")
 
-# 执行查询逻辑
+# 查询逻辑
 if query_btn:
     if not customer or not part:
         st.warning("⚠️ 请输入完整的客户名称和子零件名称！")
     else:
         try:
-            df_warranty = pd.read_csv(url_warranty)
-            df_part = pd.read_csv(url_part)
+            df_warranty = pd.read_excel(db_file, sheet_name=0)
+            df_part = pd.read_excel(db_file, sheet_name=1)
             
             df_warranty.columns = df_warranty.columns.str.strip()
             df_part.columns = df_part.columns.str.strip()
@@ -58,27 +54,27 @@ if query_btn:
             match_part = df_part[df_part['子零件名称'] == part]
             
             if match_customer.empty:
-                st.error(f"❌ 客户信息表中未找到客户：{customer}")
+                st.error(f"❌ 质保期表中未找到客户：{customer}")
             else:
-                st.success(f"✅ 找到 {customer} 的客户信息：")
+                st.success(f"✅ 找到 {customer} 的质保期信息：")
                 st.dataframe(match_customer)
                 
             if match_part.empty:
                 st.error(f"❌ CCLSCP表中未找到零件：{part}")
             else:
-                st.success(f"✅ 找到 {part} 的零件信息：")
+                st.success(f"✅ 找到 {part} 的 CCLSCP 信息：")
                 st.dataframe(match_part)
         except Exception as e:
             st.error(f"❌ 读取数据出错。详细错误: {e}")
 
-# 执行生成文件逻辑
+# 生成文件逻辑
 if generate_btn:
     if not customer or not part:
         st.warning("⚠️ 请输入完整的客户名称和子零件名称！")
     else:
         try:
-            df_warranty = pd.read_csv(url_warranty)
-            df_part = pd.read_csv(url_part)
+            df_warranty = pd.read_excel(db_file, sheet_name=0)
+            df_part = pd.read_excel(db_file, sheet_name=1)
             
             df_warranty.columns = df_warranty.columns.str.strip()
             df_part.columns = df_part.columns.str.strip()
