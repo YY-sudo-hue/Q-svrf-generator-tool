@@ -13,7 +13,7 @@ db_file = "SVRF 信息表.xlsx"
 with st.expander("🔍 点击查看基础数据库 (完整信息表)"):
     col_db1, col_db2 = st.columns(2)
     with col_db1:
-        if st.button("📊 查看质保期信息"):
+        if st.button("📊 查看客户名称信息"):
             try:
                 st.dataframe(pd.read_excel(db_file, sheet_name=0))
             except Exception as e:
@@ -54,9 +54,9 @@ if query_btn:
             match_part = df_part[df_part['子零件名称'] == part]
             
             if match_customer.empty:
-                st.error(f"❌ 质保期表中未找到客户：{customer}")
+                st.error(f"❌ 客户名称表中未找到客户：{customer}")
             else:
-                st.success(f"✅ 找到 {customer} 的质保期信息：")
+                st.success(f"✅ 找到 {customer} 的客户名称信息：")
                 st.dataframe(match_customer)
                 
             if match_part.empty:
