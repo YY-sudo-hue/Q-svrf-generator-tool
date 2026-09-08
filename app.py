@@ -8,8 +8,8 @@ st.title("📄 SVRF 质量文件自动生成器")
 st.markdown("输入客户与零件信息，系统将自动从数据库匹配并生成标准 SVRF 文件。")
 
 # ---------------- 请在下方两行粘贴您的真实链接 ----------------
-url_warranty = "在这里粘贴您的客户信息链接"
-url_part = "在这里粘贴您的CCLSCP链接"
+url_warranty = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSU0pfEGkRcFe8ehE9nNUolB1u0nciqR_e6hzWgzeAKk-KkXfLVcM4zkbssEbzgqGtWUhbjSnj8ybNs/pubhtml?gid=1613958416&single=true"
+url_part = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSU0pfEGkRcFe8ehE9nNUolB1u0nciqR_e6hzWgzeAKk-KkXfLVcM4zkbssEbzgqGtWUhbjSnj8ybNs/pubhtml?gid=1738470985&single=true"
 # -----------------------------------------------------------
 
 # 新增功能 1：全表查询（放在可折叠的面板中，保持页面整洁）
