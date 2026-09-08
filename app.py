@@ -8,7 +8,7 @@ st.title("📄 SVRF 质量文件自动生成器")
 st.markdown("输入客户与零件信息，系统将自动从数据库匹配并生成标准 SVRF 文件。")
 
 # ---------------- 请在下方两行粘贴您的真实链接 ----------------
-url_warranty = "在这里粘贴您的质保期链接"
+url_warranty = "在这里粘贴您的客户信息链接"
 url_part = "在这里粘贴您的CCLSCP链接"
 # -----------------------------------------------------------
 
@@ -16,7 +16,7 @@ url_part = "在这里粘贴您的CCLSCP链接"
 with st.expander("🔍 点击查看基础数据库 (完整信息表)"):
     col_db1, col_db2 = st.columns(2)
     with col_db1:
-        if st.button("📊 查看质保期数据库"):
+        if st.button("📊 查看客户信息"):
             try:
                 st.dataframe(pd.read_csv(url_warranty))
             except Exception as e:
@@ -58,9 +58,9 @@ if query_btn:
             match_part = df_part[df_part['子零件名称'] == part]
             
             if match_customer.empty:
-                st.error(f"❌ 质保期表中未找到客户：{customer}")
+                st.error(f"❌ 客户信息表中未找到客户：{customer}")
             else:
-                st.success(f"✅ 找到 {customer} 的质保信息：")
+                st.success(f"✅ 找到 {customer} 的客户信息：")
                 st.dataframe(match_customer)
                 
             if match_part.empty:
