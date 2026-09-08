@@ -19,9 +19,10 @@ if st.button("生成 SVRF 文件", type="primary"):
     else:
         try:
             # 读取基础信息表 (请确保表名和 Sheet 顺序与实际一致)
-            df_warranty = pd.read_excel("SVRF 信息表.xlsx", sheet_name=0)
-            df_part = pd.read_excel("SVRF 信息表.xlsx", sheet_name=1)
-            
+           url_warranty = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSU0pfEGkRcFe8ehE9nNUolB1u0nciqR_e6hzWgzeAKk-KkXfLVcM4zkbssEbzgqGtWUhbjSnj8ybNs/pubhtml?gid=1613958416&single=true"
+url_part = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSU0pfEGkRcFe8ehE9nNUolB1u0nciqR_e6hzWgzeAKk-KkXfLVcM4zkbssEbzgqGtWUhbjSnj8ybNs/pubhtml?gid=1738470985&single=true"
+df_warranty = pd.read_csv(url_warranty)
+df_part = pd.read_csv(url_part)
             # 清理列名空格，防止匹配失败
             df_warranty.columns = df_warranty.columns.str.strip()
             df_part.columns = df_part.columns.str.strip()
